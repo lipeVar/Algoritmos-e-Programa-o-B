@@ -1,14 +1,11 @@
 #include <iostream>
 #include <string>
+#include <cctype>
 
 
 #include "metodos.h"
 
 using namespace std;
-
-string fraseMaiuscula(string frase) {
-    
-}
 
 int main() {
     string frase;
@@ -16,7 +13,8 @@ int main() {
     cout << "Digite uma frase: " << endl;
     getline(cin, frase);
 
-    fraseMaiuscula(frase);
+    string  resultado = fraseMaiuscula(frase);
+    cout << "Em Maiusculas: " << resultado << endl;
 
     return 1;
 }

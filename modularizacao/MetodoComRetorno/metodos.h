@@ -97,3 +97,23 @@ bool verificarDataValida(string data) {
         return true;
     }
 }
+
+string fraseMaiuscula(string frase) {
+    for(int i=0; i < frase.size(); i++) {
+        frase[i] = toupper(frase[i]);
+    }
+    return frase;
+}
+
+bool estaOrdenado(int vetor[], int tamanho) {
+    for (int i = 0; i < tamanho - 1; i++) {
+        if (vetor[i] > vetor[i + 1]) {
+            return false; // encontrou fora de ordem
+        }
+    }
+    return true; // está todo ordenado
+}
+
+void primeiroNome(string nome){
+    cout << "O primeiro nome é: " << nome << endl;
+}
