@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void lerPalavra(std::string palavra, char letra) {
+void lerPalavra(string palavra, char letra) {
     cout << "Digite a palavra";
     cin >> palavra;
 
