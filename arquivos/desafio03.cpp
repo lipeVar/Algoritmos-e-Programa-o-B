@@ -10,7 +10,7 @@ void lerNomes(string vetorNome[], int n) {
         getline(cin, vetorNome[i]);
     }
 }
-void ordenaNome() {
+void ordenaNome(string vetor[], int n) {
 
 }
 
@@ -23,9 +23,9 @@ void exibirNome(string vetor[], int n) {
 int main() {
     string nomes[N];
 
-    lerNomes(nomes[], N);
-    ordenaNome(nomes[], N);
-    exibirNome(nomes[], N);
+    lerNomes(nomes, N);
+    ordenaNome(nomes, N);
+    exibirNome(nomes, N);
 
 
     return 1;
