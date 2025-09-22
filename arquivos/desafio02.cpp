@@ -37,12 +37,16 @@ void lerNomes(Pessoa vetor[], int n) {
 
 void exibirNomes(Pessoa vetor[], int n) {
     for(int i = 1; i < n; i++) {
-        cout << "Nome Completo: " << vetor[i].nomeCompleto;
+        cout << "Nome Completo: " << vetor[i].nomeCompleto << " Sobrenome: " << vetor[i].sobreNome << endl;
     }   
 }
 
 int main() {
     Pessoa pessoas[N];
+
+    lerNomes(pessoas, N);
+
+    exibirNomes(pessoas, N);
     
 
 
