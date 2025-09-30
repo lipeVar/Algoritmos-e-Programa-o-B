@@ -25,6 +25,14 @@ string trocarLetra(string frase, char letra) {
     }
     return frase;
 }
+string trocarLetraOrigemDestino(string frase, char letraOrigem, char letraDestino) {
+    for(int i=0; i < frase.size(); i++) {
+        if(toupper(frase[i]) == toupper(letraOrigem)) {
+            frase[i] = letraDestino;
+        }
+    }
+    return frase;
+}
 
 string maiusculo(string frase) {
     for(int i=0; i < frase.size(); i++) {
