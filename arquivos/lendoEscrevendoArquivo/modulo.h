@@ -17,6 +17,55 @@ int contarVogais(string frase) {
     return totalVogal;
 }
 
+int conectarBase(string listaNomes[], string nomeBanco, int tamanho) {
+    ifstream procuradorArquivo; //tipo de arquivo para leitura
+   procuradorArquivo.open(nomeBanco); 
+   
+   string linha;
+   int quantidadeNomes = 0;
+   while (!procuradorArquivo.eof() && quantidadeNomes < tamanho) {
+    getline(procuradorArquivo,linha);
+    listaNomes[quantidadeNomes] = linha;
+    quantidadeNomes++;
+   }
+
+   procuradorArquivo.close();
+
+   return quantidadeNomes;
+}
+
+void exibirListaNomes(string listaNmes[], int quantidadeNomes) {
+    for (int i = 0; i<quantidadeNomes; i++) {
+        cout << listaNmes[i] << endl;
+    }
+}
+
+bool inserirLista(string nome, string listaNomes[], int *quantidadeNomes, int tamanho) { // * é para relacionar 
+    if(*quantidadeNomes == tamanho) {
+        return false; //lista lotada
+    }
+    int i;
+    bool encontrou = false;
+    for(i = 0; i<*quantidadeNomes; i++) {
+        if(nome == listaNomes[i]) {
+            encontrou = true;
+            break;
+        }
+    }
+
+    if(encontrou) { //se encontrou o nome retorna falso pq nao inseriu
+        return false;
+    }
+
+    *quantidadeNomes = *quantidadeNomes + 1;
+    listaNomes[*quantidadeNomes] = nome;
+    
+    //ordenar a lista
+    
+    return true;
+}
+
+
 string trocarLetra(string frase, char letra) {
     for(int i=0; i < frase.size(); i++) {
         if(toupper(frase[i]) == toupper(letra)) {

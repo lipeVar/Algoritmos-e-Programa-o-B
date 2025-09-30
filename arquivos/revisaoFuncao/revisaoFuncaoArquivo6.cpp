@@ -10,7 +10,7 @@ using namespace std;
 #include "modulo.h"
 
 int main() {
-   string nomeArquivo;
+    string nomeArquivo;
    cout << "Digite o caminho e nome do arquivo: ";
    cin >> nomeArquivo;
 
@@ -23,5 +23,19 @@ int main() {
 
    string resposta = copiaArquivoString(nomeArquivo);
 
-   return 1;
+   cout << resposta << endl;
+
+   char letraOrigem;
+   cout << "Digite a letra origem: ";
+   cin >> letraOrigem;
+
+   char letraDestino;
+   cout << "Digite a letra destino: ";
+   cin >> letraDestino;
+
+   string respostaAlterada = trocarLetraOrigemDestino(resposta, letraOrigem, letraDestino);
+
+   cout << "resposta alterada: " << respostaAlterada << endl;
+
+    return 1;
 }
