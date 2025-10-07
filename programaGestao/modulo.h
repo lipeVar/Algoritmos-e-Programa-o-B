@@ -4,6 +4,7 @@
 #include <sstream>
 #include <fstream>
 #include <bits/stdc++.h>
+#include <limits>
 
 using namespace std;
 
@@ -205,12 +206,12 @@ int cadastrarPessoas(Pessoa vetor[], int quant_pessoas, int tamanho, string base
     string nome;
     string email;
 
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // limpa o buffer
     cout << "Nome: ";
     getline(cin, nome);
-    fflush(stdin);
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // limpa o buffer
     cout << "Email: ";
-    getline(cin, email);
-    fflush(stdin);
+    cin >> email;
 
     //validar se nome e email entao no vetor
 
@@ -234,7 +235,6 @@ void menu(Pessoa vetor[], int tamanho, int quant_pessoas, string baseDados) {
         cout << "Opção: ";
         cin >> opcao;
         fflush(stdin);
-
 
         switch (opcao)
         {

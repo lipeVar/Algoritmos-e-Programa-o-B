@@ -20,9 +20,5 @@ int main() {
 
     quanti_pessoas = conectarBase(baseDados, vetor, tam);
     menu(vetor, tam, quanti_pessoas, baseDados);
-
-    for(int i = 0; i < quanti_pessoas; i++) {
-        cout << vetor[i].nome << endl;
-    }
     return 1;
 }
