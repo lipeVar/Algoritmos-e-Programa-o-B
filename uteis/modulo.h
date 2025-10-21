@@ -19,22 +19,22 @@ int contarVogais(string frase) {
     return totalVogal;
 }
 
-//int conectarBase(string listaNomes[], string nomeBanco, int tamanho) {
-//    ifstream procuradorArquivo; //tipo de arquivo para leitura
-//   procuradorArquivo.open(nomeBanco); 
-//   
-//   string linha;
-//   int quantidadeNomes = 0;
-//   while (!procuradorArquivo.eof() && quantidadeNomes < tamanho) {
-//    getline(procuradorArquivo,linha);
-//    listaNomes[quantidadeNomes] = linha;
-//    quantidadeNomes++;
-//   }
-//
-//   procuradorArquivo.close();
-//
-//   return quantidadeNomes;
-//}
+/* int conectarBase(string listaNomes[], string nomeBanco, int tamanho) {
+  ifstream procuradorArquivo; //tipo de arquivo para leitura
+   procuradorArquivo.open(nomeBanco); 
+   
+   string linha;
+   int quantidadeNomes = 0;
+   while (!procuradorArquivo.eof() && quantidadeNomes < tamanho) {
+    getline(procuradorArquivo,linha);
+    listaNomes[quantidadeNomes] = linha;
+    quantidadeNomes++;
+   }
+
+   procuradorArquivo.close();
+
+   return quantidadeNomes;
+} */
 
 void exibirListaNomes(string listaNmes[], int quantidadeNomes) {
     for (int i = 0; i<quantidadeNomes; i++) {

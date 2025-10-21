@@ -10,7 +10,7 @@ typedef struct
     string email;
 } Pessoa;
 
-#include "modulo.h"
+#include "uteis/modulo.h"
 
 
 int main() {
