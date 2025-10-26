@@ -147,8 +147,8 @@ void split(string vetor[], string str, string deli = " ")
     vetor[i] = str.substr(start, end - start);
 }
 
-int conectarBase(string baseDados, Pessoa vetor[], int tamanho) {
-    int quant_pessoas = 0;
+int conectarBase(string baseDados, Garagem vetor[], int tamanho) {
+    int quant_Carros = 0;
     ifstream procuradorArquivo; //tipo de arquivo para leitura
     procuradorArquivo.open(baseDados); 
 
@@ -156,7 +156,7 @@ int conectarBase(string baseDados, Pessoa vetor[], int tamanho) {
         cout << "Arquivo não localizado. Programa encerrado." << endl;
         exit(0);
     } 
-    if(quant_pessoas == tamanho) {
+    if(quant_Carros == tamanho) {
         cout << "Arquivo lotado. Programa encerrado." << endl;
         exit(0);
     }
@@ -169,68 +169,68 @@ int conectarBase(string baseDados, Pessoa vetor[], int tamanho) {
 		split(vetorLinha, linha, ",");
         // vetorLinha[0] = "alexandre Zamberlan"
         // vetorLinha[1] = "alexz@ufn.edu.br"
-        vetor[quant_pessoas].nome = vetorLinha[0];
-        vetor[quant_pessoas].email = vetorLinha[1];
-        quant_pessoas++;
+        vetor[quant_Carros].placa = vetorLinha[0];
+        vetor[quant_Carros].carro = vetorLinha[1];
+        quant_Carros++;
 	}
 
 	procuradorArquivo.close();
 
-    return quant_pessoas;
+    return quant_Carros;
 }
 
-void listasPessoas(Pessoa vetor[], int quant_pessoas) {
-    cout << "Listar Pessoas\n";
-    for(int i = 0;i<quant_pessoas; i++) {
-        cout << "Nome: " << vetor[i].nome << ". Email: " << vetor[i].email << endl;
+void listasPessoas(Garagem vetor[], int quant_Carros) {
+    cout << "Lista de Carros\n";
+    for(int i = 0;i<quant_Carros; i++) {
+        cout << "Placa: " << vetor[i].placa << ". Carro: " << vetor[i].carro << endl;
     }
     cout << "__________________\n";
-    cout << "Total de registros: " << quant_pessoas << endl;
+    cout << "Total de registros: " << quant_Carros << endl;
 }
 
-void gravarPessoaBase(string nome, string email, string baseDados) {
+void gravarCarroBase(string placa, string carro, string baseDados) {
     ofstream procuradorArquivos;
     procuradorArquivos.open(baseDados, ios::out | ios::app);
 
-    procuradorArquivos << "\n" << nome << "," << email;
+    procuradorArquivos << "\n" << placa << "," << carro;
 
     procuradorArquivos.close();
 }
 
-int cadastrarPessoas(Pessoa vetor[], int quant_pessoas, int tamanho, string baseDados) {
-    if(tamanho == quant_pessoas) {
+int cadastrarPessoas(Garagem vetor[], int quant_Carros, int tamanho, string baseDados) {
+    if(tamanho == quant_Carros) {
         cout << "Base de dados lotada...\n";
-        return quant_pessoas;
+        return quant_Carros;
     }
-    cout << "Cadastrar Pessoas\n";
-    string nome;
-    string email;
+    cout << "Cadastrar Carros na garagem\n";
+    string placa;
+    string carro
 
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // limpa o buffer
-    cout << "Nome: ";
-    getline(cin, nome);
+    cout << "Placa: ";
+    getline(cin, placa);
     cin.ignore(numeric_limits<streamsize>::max(), '\n'); // limpa o buffer
-    cout << "Email: ";
-    cin >> email;
+    cout << "Carro: ";
+    cin >> carro;
 
     //validar se nome e email entao no vetor
 
-    vetor[quant_pessoas].nome = nome;
-    vetor[quant_pessoas].email = email;
-    quant_pessoas++;
+    vetor[quant_Carros].placa = placa;
+    vetor[quant_Carros].carro = carro;
+    quant_Carros++;
 
-    gravarPessoaBase(nome, email, baseDados);
+    gravarPessoaBase(placa, carro, baseDados);
 
-    return quant_pessoas;
+    return quant_Carros;
 }
 
-void menu(Pessoa vetor[], int tamanho, int quant_pessoas, string baseDados) {
+void menu(Garagem vetor[], int tamanho, int quant_Carros, string baseDados) {
     int opcao;
     do
     {
         cout << "------------MENU------------\n";
-        cout << "1- Listar pessoas\n";
-        cout << "2- Cadastrar pessoa\n";
+        cout << "1- Listar carros na Garagem\n";
+        cout << "2- Entrada de novo carro\n";
         cout << "3- Sair\n";
         cout << "Opção: ";
         cin >> opcao;
@@ -239,11 +239,10 @@ void menu(Pessoa vetor[], int tamanho, int quant_pessoas, string baseDados) {
         switch (opcao)
         {
         case 1:
-            listasPessoas(vetor, quant_pessoas);
+            listasCarros(vetor, quant_Carros);
             break;
-        
         case 2:
-            quant_pessoas = cadastrarPessoas(vetor, quant_pessoas, tamanho, baseDados);
+            quant_Carros = cadastrarCarros(vetor, quant_Carros, tamanho, baseDados);
             break;
         case 3:
             break;    
