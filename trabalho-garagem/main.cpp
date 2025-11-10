@@ -11,11 +11,6 @@
 
 using namespace std;
 
-typedef struct
-{
-    string placa;
-    string carro;
-} Garagem;
 
 int main() {
     Garagem vetor[tam];
@@ -24,5 +19,6 @@ int main() {
 
     quanti_Carros = conectarBase(baseDados, vetor, tam);
     menu(vetor, tam, quanti_Carros, baseDados);
-    return 1;
+    
+    return 0;
 }

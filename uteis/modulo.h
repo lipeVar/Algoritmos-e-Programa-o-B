@@ -8,6 +8,13 @@
 
 using namespace std;
 
+typedef struct
+{
+    string placa;
+    string carro;
+} Garagem;
+
+
 int contarVogais(string frase) {
     int totalVogal = 0;
 
@@ -18,23 +25,6 @@ int contarVogais(string frase) {
     }
     return totalVogal;
 }
-
-/* int conectarBase(string listaNomes[], string nomeBanco, int tamanho) {
-  ifstream procuradorArquivo; //tipo de arquivo para leitura
-   procuradorArquivo.open(nomeBanco); 
-   
-   string linha;
-   int quantidadeNomes = 0;
-   while (!procuradorArquivo.eof() && quantidadeNomes < tamanho) {
-    getline(procuradorArquivo,linha);
-    listaNomes[quantidadeNomes] = linha;
-    quantidadeNomes++;
-   }
-
-   procuradorArquivo.close();
-
-   return quantidadeNomes;
-} */
 
 void exibirListaNomes(string listaNmes[], int quantidadeNomes) {
     for (int i = 0; i<quantidadeNomes; i++) {
@@ -153,22 +143,24 @@ int conectarBase(string baseDados, Garagem vetor[], int tamanho) {
     procuradorArquivo.open(baseDados); 
 
     if (!procuradorArquivo) {
-        cout << "Arquivo não localizado. Programa encerrado." << endl;
-        exit(0);
+        cout << "Arquivo não localizado. Criando um novo 'base.csv'..." << endl;
+        return 0; 
     } 
-    if(quant_Carros == tamanho) {
-        cout << "Arquivo lotado. Programa encerrado." << endl;
-        exit(0);
-    }
 
     string linha;
     string vetorLinha[2];
-	while (!procuradorArquivo.eof()) {
-		getline(procuradorArquivo,linha); //lendo a linha inteira
-		// procuradorArquivo >> frase; //lendo palavra por palavra da linha 
+	while (getline(procuradorArquivo,linha)) {
+        
+        if (linha.empty()) {
+            continue;
+        }
+        
+        if(quant_Carros == tamanho) {
+            cout << "Arquivo lotado. Alguns dados não foram carregados." << endl;
+            break; 
+        }
+
 		split(vetorLinha, linha, ",");
-        // vetorLinha[0] = "alexandre Zamberlan"
-        // vetorLinha[1] = "alexz@ufn.edu.br"
         vetor[quant_Carros].placa = vetorLinha[0];
         vetor[quant_Carros].carro = vetorLinha[1];
         quant_Carros++;
@@ -179,10 +171,14 @@ int conectarBase(string baseDados, Garagem vetor[], int tamanho) {
     return quant_Carros;
 }
 
-void listasPessoas(Garagem vetor[], int quant_Carros) {
+void listasCarros(Garagem vetor[], int quant_Carros) {
     cout << "Lista de Carros\n";
-    for(int i = 0;i<quant_Carros; i++) {
-        cout << "Placa: " << vetor[i].placa << ". Carro: " << vetor[i].carro << endl;
+    if (quant_Carros == 0) {
+        cout << "A garagem esta vazia." << endl;
+    } else {
+        for(int i = 0;i<quant_Carros; i++) {
+            cout << "Placa: " << vetor[i].placa << ". Carro: " << vetor[i].carro << endl;
+        }
     }
     cout << "__________________\n";
     cout << "Total de registros: " << quant_Carros << endl;
@@ -192,26 +188,35 @@ void gravarCarroBase(string placa, string carro, string baseDados) {
     ofstream procuradorArquivos;
     procuradorArquivos.open(baseDados, ios::out | ios::app);
 
-    procuradorArquivos << "\n" << placa << "," << carro;
+    procuradorArquivos.seekp(0, ios::end);
+    long pos = procuradorArquivos.tellp(); 
+    
+    if (pos > 0) {
+        procuradorArquivos << "\n"; 
+    }
+    
+    procuradorArquivos << placa << "," << carro;
 
     procuradorArquivos.close();
 }
 
-int cadastrarPessoas(Garagem vetor[], int quant_Carros, int tamanho, string baseDados) {
+int cadastrarCarros(Garagem vetor[], int quant_Carros, int tamanho, string baseDados) {
     if(tamanho == quant_Carros) {
         cout << "Base de dados lotada...\n";
         return quant_Carros;
     }
     cout << "Cadastrar Carros na garagem\n";
     string placa;
-    string carro
+    string carro; 
 
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // limpa o buffer
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
     cout << "Placa: ";
-    getline(cin, placa);
-    cin.ignore(numeric_limits<streamsize>::max(), '\n'); // limpa o buffer
+    getline(cin, placa); 
+    
     cout << "Carro: ";
     cin >> carro;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
 
     //validar se nome e email entao no vetor
 
@@ -219,8 +224,9 @@ int cadastrarPessoas(Garagem vetor[], int quant_Carros, int tamanho, string base
     vetor[quant_Carros].carro = carro;
     quant_Carros++;
 
-    gravarPessoaBase(placa, carro, baseDados);
+    gravarCarroBase(placa, carro, baseDados);
 
+    cout << "Carro cadastrado com sucesso!" << endl;
     return quant_Carros;
 }
 
@@ -234,7 +240,13 @@ void menu(Garagem vetor[], int tamanho, int quant_Carros, string baseDados) {
         cout << "3- Sair\n";
         cout << "Opção: ";
         cin >> opcao;
-        fflush(stdin);
+
+        if (cin.fail()) {
+            cout << "Entrada invalida. Por favor, digite um numero.\n";
+            cin.clear(); 
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+            opcao = 0; 
+        }
 
         switch (opcao)
         {
@@ -245,9 +257,12 @@ void menu(Garagem vetor[], int tamanho, int quant_Carros, string baseDados) {
             quant_Carros = cadastrarCarros(vetor, quant_Carros, tamanho, baseDados);
             break;
         case 3:
+            cout << "Encerrando programa..." << endl;
             break;    
         default:
-            cout << "Opcao invalida...\n";
+            if (opcao != 0) { 
+                cout << "Opcao invalida...\n";
+            }
         }
 
     } while (opcao != 3);
