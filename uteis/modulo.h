@@ -10,9 +10,11 @@ using namespace std;
 
 typedef struct
 {
-    string placa;
-    string carro;
-} Garagem;
+    string raça;
+    string cor;
+    string nome_dono;
+    int horario;
+} Pet;
 
 
 int contarVogais(string frase) {
@@ -137,8 +139,8 @@ void split(string vetor[], string str, string deli = " ")
     vetor[i] = str.substr(start, end - start);
 }
 
-int conectarBase(string baseDados, Garagem vetor[], int tamanho) {
-    int quant_Carros = 0;
+int conectarBase(string baseDados, Pet vetor[], int tamanho) {
+    int quanti_Animais = 0;
     ifstream procuradorArquivo; //tipo de arquivo para leitura
     procuradorArquivo.open(baseDados); 
 
@@ -155,33 +157,33 @@ int conectarBase(string baseDados, Garagem vetor[], int tamanho) {
             continue;
         }
         
-        if(quant_Carros == tamanho) {
+        if(quanti_Animais == tamanho) {
             cout << "Arquivo lotado. Alguns dados não foram carregados." << endl;
             break; 
         }
 
 		split(vetorLinha, linha, ",");
-        vetor[quant_Carros].placa = vetorLinha[0];
-        vetor[quant_Carros].carro = vetorLinha[1];
-        quant_Carros++;
+        vetor[quanti_Animais].placa = vetorLinha[0];
+        vetor[quanti_Animais].carro = vetorLinha[1];
+        quanti_Animais++;
 	}
 
 	procuradorArquivo.close();
 
-    return quant_Carros;
+    return quanti_Animais;
 }
 
-void listasCarros(Garagem vetor[], int quant_Carros) {
+void listasCarros(Garagem vetor[], int quanti_Animais) {
     cout << "Lista de Carros\n";
-    if (quant_Carros == 0) {
+    if (quanti_Animais == 0) {
         cout << "A garagem esta vazia." << endl;
     } else {
-        for(int i = 0;i<quant_Carros; i++) {
+        for(int i = 0;i<quanti_Animais; i++) {
             cout << "Placa: " << vetor[i].placa << ". Carro: " << vetor[i].carro << endl;
         }
     }
     cout << "__________________\n";
-    cout << "Total de registros: " << quant_Carros << endl;
+    cout << "Total de registros: " << quanti_Animais << endl;
 }
 
 void gravarCarroBase(string placa, string carro, string baseDados) {
@@ -200,10 +202,10 @@ void gravarCarroBase(string placa, string carro, string baseDados) {
     procuradorArquivos.close();
 }
 
-int cadastrarCarros(Garagem vetor[], int quant_Carros, int tamanho, string baseDados) {
-    if(tamanho == quant_Carros) {
+int cadastrarCarros(Garagem vetor[], int quanti_Animais, int tamanho, string baseDados) {
+    if(tamanho == quanti_Animais) {
         cout << "Base de dados lotada...\n";
-        return quant_Carros;
+        return quanti_Animais;
     }
     cout << "Cadastrar Carros na garagem\n";
     string placa;
@@ -220,26 +222,27 @@ int cadastrarCarros(Garagem vetor[], int quant_Carros, int tamanho, string baseD
 
     //validar se nome e email entao no vetor
 
-    vetor[quant_Carros].placa = placa;
-    vetor[quant_Carros].carro = carro;
-    quant_Carros++;
+    vetor[quanti_Animais].placa = placa;
+    vetor[quanti_Animais].carro = carro;
+    quanti_Animais++;
 
     gravarCarroBase(placa, carro, baseDados);
 
-    cout << "Carro cadastrado com sucesso!" << endl;
-    return quant_Carros;
+    cout << "Pet cadastrado com sucesso!" << endl;
+    return quanti_Animais;
 }
 
-void menu(Garagem vetor[], int tamanho, int quant_Carros, string baseDados) {
+void menu(Pet vetor[], int tamanho, int quanti_Animais, string baseDados) {
     int opcao;
     do
     {
-        cout << "------------MENU------------\n";
-        cout << "1- Listar carros na Garagem\n";
-        cout << "2- Entrada de novo carro\n";
+        cout << "\n------------MENU------------\n";
+        cout << "1- Listar animais no Pet-Shop\n";
+        cout << "2- Chegada de novo pet\n";
         cout << "3- Sair\n";
         cout << "Opção: ";
         cin >> opcao;
+        cout << "\n\n";
 
         if (cin.fail()) {
             cout << "Entrada invalida. Por favor, digite um numero.\n";
@@ -251,10 +254,10 @@ void menu(Garagem vetor[], int tamanho, int quant_Carros, string baseDados) {
         switch (opcao)
         {
         case 1:
-            listasCarros(vetor, quant_Carros);
+            listasCarros(vetor, quanti_Animais);
             break;
         case 2:
-            quant_Carros = cadastrarCarros(vetor, quant_Carros, tamanho, baseDados);
+            quanti_Animais = cadastrarCarros(vetor, quanti_Animais, tamanho, baseDados);
             break;
         case 3:
             cout << "Encerrando programa..." << endl;
