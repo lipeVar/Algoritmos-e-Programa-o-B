@@ -5,20 +5,21 @@
 #include <fstream>
 #include <bits/stdc++.h>
 #include <limits>
-#define tam 1000
 
-#include "../uteis/modulo.h"
+#include "modulo.h"
 
 using namespace std;
 
-
 int main() {
-    Pet vetor[tam];
-    int quanti_Animais;
-    string baseDados = "listaAnimais.csv";
 
-    quanti_Animais = conectarBase(baseDados, vetor, tam);
-    menu(vetor, tam, quanti_Animais, baseDados);
-    
+    Pet vetor[tam];
+    int quanti = 0;
+    string base = "pets.csv";
+
+    quanti = conectarBase(base, vetor, tam);
+
+    menu(vetor, tam, quanti, base);
+
     return 0;
 }
+
